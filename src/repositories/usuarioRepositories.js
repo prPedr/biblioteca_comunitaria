@@ -19,7 +19,7 @@ const criarUsuarioRepositorie = (novoUsuario) => {
         INSERT INTO usuarios (nomeUsuario, email, senha, fotoPerfil)
         VALUES (?, ?, ?, ?)
       `,
-      
+
       [nomeUsuario, email, senha, fotoPerfil],
 
       function (err) {
@@ -28,7 +28,7 @@ const criarUsuarioRepositorie = (novoUsuario) => {
         } else {
           resolve({
             id : this.lastID(),
-            nomeUsuario,
+            ...novoUsuario,
             Mensagem : `Usuario ${nomeUsuario} criado`
           })
         }
