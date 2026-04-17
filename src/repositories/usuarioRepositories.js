@@ -2,34 +2,34 @@ import db from "../config/database.js"
 
 db.run(`
   CREATE TABLE IF NOT EXISTS usuarios (
-    idUsuario INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nomeUsuario TEXT UNIQUE NOT NULL,
     email TEXT UNIQUE NOT NULL,
     senha TEXT NOT NULL,
-    fotoUsuario TEXT
-  )
+    fotoPerfil TEXT
+  )  
 `)
 
-const criarUsuarioRepositories = (novoUsuario) => {
+const criarUsuarioRepositorie = (novoUsuario) => {
   return new Promise((resolve, reject) => {
-    const {nomeUsuario, email, senha, fotoUsuario = null} = novoUsuario
+    const {nomeUsuario, email, senha, fotoPerfil} = novoUsuario
 
     db.run(
       `
-        INSERT INTO usuarios (nomeUsuario, email, senha, fotoUsuario)
+        INSERT INTO usuarios (nomeUsuario, email, senha, fotoPerfil)
         VALUES (?, ?, ?, ?)
       `,
       
-      [nomeUsuario, email, senha, fotoUsuario],
+      [nomeUsuario, email, senha, fotoPerfil],
 
       function (err) {
         if (err) {
           reject(err)
         } else {
           resolve({
-            id: this.lastID,
+            id : this.lastID(),
             nomeUsuario,
-            Mensagem : `Usuario ${nomeUsuario} cadastrado`
+            Mensagem : `Usuario ${nomeUsuario} criado`
           })
         }
       }
@@ -37,4 +37,6 @@ const criarUsuarioRepositories = (novoUsuario) => {
   })
 }
 
-export default criarUsuarioRepositories
+export default {
+  criarUsuarioRepositorie
+}
