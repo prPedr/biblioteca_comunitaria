@@ -14,7 +14,7 @@ db.run(
 
 const criarUsuarioRepositories = (novoUsuario) => {
   return new Promise((resolve, reject) => {
-    const {nomeUsuario, email, senha, fotoPerfil} = novoUsuario
+    const { nomeUsuario, email, senha, fotoPerfil } = novoUsuario
 
     db.run(
       `
@@ -29,9 +29,9 @@ const criarUsuarioRepositories = (novoUsuario) => {
           reject(err)
         } else {
           resolve({
-            id: this.lastID(),
+            id : this.lastID(),
             ...novoUsuario,
-            Mensagem : `Usuario ${nomeUsuario} cadastrado.`
+            Mensagem : `Usuario ${nomeUsuario} cadastrado`
           })
         }
       }
