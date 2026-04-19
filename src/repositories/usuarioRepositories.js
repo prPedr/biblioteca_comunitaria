@@ -30,7 +30,7 @@ const criarUsuarioRepositories = (novoUsuario) => {
         } else {
           resolve({
             id : this.lastID(),
-            ...novoUsuario,
+            ...nomeUsuario,
             Mensagem : `Usuario ${nomeUsuario} cadastrado`
           })
         }
