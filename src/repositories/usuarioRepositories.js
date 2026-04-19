@@ -1,16 +1,18 @@
 import db from "../config/database.js"
 
-db.run(`
-  CREATE TABLE IF NOT EXISTS usuarios (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    nomeUsuario TEXT UNIQUE NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    senha TEXT NOT NULL,
-    fotoPerfil TEXT
-  )  
-`)
+db.run(
+  `
+    CREATE TABLE IF NOT EXISTS usuarios (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nomeUsuario TEXT UNIQUE NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      senha TEXT NOT NULL,
+      fotoPerfil TEXT
+    )
+  `
+)
 
-const criarUsuarioRepositorie = (novoUsuario) => {
+const criarUsuarioRepositories = (novoUsuario) => {
   return new Promise((resolve, reject) => {
     const {nomeUsuario, email, senha, fotoPerfil} = novoUsuario
 
@@ -27,9 +29,9 @@ const criarUsuarioRepositorie = (novoUsuario) => {
           reject(err)
         } else {
           resolve({
-            id : this.lastID(),
+            id: this.lastID(),
             ...novoUsuario,
-            Mensagem : `Usuario ${nomeUsuario} criado`
+            Mensagem : `Usuario ${nomeUsuario} cadastrado.`
           })
         }
       }
@@ -38,5 +40,5 @@ const criarUsuarioRepositorie = (novoUsuario) => {
 }
 
 export default {
-  criarUsuarioRepositorie
+  criarUsuarioRepositories
 }
