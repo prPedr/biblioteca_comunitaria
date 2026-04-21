@@ -1,10 +1,10 @@
 import express from "express"
-import router from "./src/routes/usuarioRoutes.js"
+import usuarioRoutes from "./src/routes/usuarioRoutes.js"
 
 const app = express()
 
 app.use(express.json())
-app.use(router)
+app.use(usuarioRoutes)
 
 const porta = 3235
 
