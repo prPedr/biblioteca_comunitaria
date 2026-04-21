@@ -60,7 +60,30 @@ const buscarUsuarioPorEmail = (email) => {
   })
 }
 
+const buscarUsuarioPorNome = (nomeUsuario) => {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `
+        SELECT id, nomeUsuario, email
+        FROM usuarios
+        WHERE nomeUsuario = ?
+      `,
+
+      [nomeUsuario],
+
+      (err, linhaNome) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(linhaNome)
+        }
+      }
+    )
+  })
+}
+
 export default {
   criarUsuarioRepositories,
-  buscarUsuarioPorEmail
+  buscarUsuarioPorEmail,
+  buscarUsuarioPorNome
 }
