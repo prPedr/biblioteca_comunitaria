@@ -1,6 +1,11 @@
 import usuarioRepositories from "../repositories/usuarioRepositories.js"
 
 const criarUsuarioServices = async (novoUsuario) => {
+  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmail(novoUsuario.email)
+  if (buscarEmail) {
+    throw new Error("Email já cadastrado.")
+  }
+  
   const usuario = await usuarioRepositories.criarUsuarioRepositories(novoUsuario)
   return usuario
 }

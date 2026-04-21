@@ -38,6 +38,29 @@ const criarUsuarioRepositories = (novoUsuario) => {
   })
 }
 
+const buscarUsuarioPorEmail = (email) => {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `
+        SELECT id, nomeUsuario, email
+        FROM usuarios
+        WHERE email = ?
+      `,
+
+      [email],
+
+      (err, linhaEmail) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(linhaEmail)
+        }
+      }
+    )
+  })
+}
+
 export default {
-  criarUsuarioRepositories
+  criarUsuarioRepositories,
+  buscarUsuarioPorEmail
 }
