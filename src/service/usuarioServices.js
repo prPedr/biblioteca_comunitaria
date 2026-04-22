@@ -1,4 +1,5 @@
 import usuarioRepositories from "../repositories/usuarioRepositories.js"
+import bcrypt from "bcrypt"
 
 const criarUsuarioServices = async (novoUsuario) => {
   const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmail(novoUsuario.email)
@@ -11,7 +12,16 @@ const criarUsuarioServices = async (novoUsuario) => {
     throw new Error("Nome de usuario já cadastrado.")
   }
 
-  const usuario = await usuarioRepositories.criarUsuarioRepositories(novoUsuario)
+  const senhaHash = await bcrypt.hash(novoUsuario.senha, 10)
+  const usuario = await usuarioRepositories.criarUsuarioRepositories({
+    ...novoUsuario,
+    senha : senhaHash,
+  })
+
+  if (!usuario) {
+    throw new Error("Erro ao criar usuario.")
+  }
+
   return usuario
 }
 
