@@ -10,7 +10,7 @@ const criarUsuarioServices = async (novoUsuario) => {
   if (buscarNome) {
     throw new Error("Nome de usuario já cadastrado.")
   }
-  
+
   const usuario = await usuarioRepositories.criarUsuarioRepositories(novoUsuario)
   return usuario
 }
