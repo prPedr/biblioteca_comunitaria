@@ -42,7 +42,7 @@ const buscarUsuarioPorEmail = (email) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
-        SELECT id, nomeUsuario, email
+        SELECT id, email
         FROM usuarios
         WHERE email = ?
       `,
@@ -64,7 +64,7 @@ const buscarUsuarioPorNome = (nomeUsuario) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
-        SELECT id, nomeUsuario, email
+        SELECT id, nomeUsuario
         FROM usuarios
         WHERE nomeUsuario = ?
       `,
