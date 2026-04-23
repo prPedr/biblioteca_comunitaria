@@ -25,6 +25,22 @@ const criarUsuarioServices = async (novoUsuario) => {
   return usuario
 }
 
+const encontrarTodosUsuariosServices = async () => {
+  const usuarios = await usuarioRepositories.encontrarTodosUsuariosRepositories()
+  return usuarios
+}
+
+const buscarUsuarioPorID = async (id) => {
+  const usuario = await usuarioRepositories.buscarUsuarioPorID(id)
+  if (!usuario) {
+    throw new Error("Usuario nao encontrado")
+  }
+
+  return usuario
+}
+
 export default {
-  criarUsuarioServices
+  criarUsuarioServices,
+  encontrarTodosUsuariosServices,
+  buscarUsuarioPorID
 }

@@ -38,11 +38,33 @@ const criarUsuarioRepositories = (novoUsuario) => {
   })
 }
 
+const buscarUsuarioPorID = (id) => {
+  return new Promise((resolve, reject) => {
+    db.get(
+      `
+        SELECT id, nomeUsuario, email, fotoPerfil
+        FROM usuarios
+        WHERE id = ?
+      `,
+
+      [id],
+
+      (err, linhaID) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(linhaID)
+        }
+      }
+    )
+  })
+}
+
 const buscarUsuarioPorEmail = (email) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
-        SELECT id, email
+        SELECT id, nomeUsuario, email, fotoPerfil
         FROM usuarios
         WHERE email = ?
       `,
@@ -64,7 +86,7 @@ const buscarUsuarioPorNome = (nomeUsuario) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
-        SELECT id, nomeUsuario
+        SELECT id, nomeUsuario, email, fotoPerfil
         FROM usuarios
         WHERE nomeUsuario = ?
       `,
@@ -82,8 +104,30 @@ const buscarUsuarioPorNome = (nomeUsuario) => {
   })
 }
 
+const encontrarTodosUsuariosRepositories = () => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `
+        SELECT id, nomeUsuario, email, fotoPerfil
+        FROM usuarios
+      `,
+
+      [],
+
+      (err, linhasTodos) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(linhasTodos)
+        }
+      }
+    )
+  })
+}
+
 export default {
   criarUsuarioRepositories,
   buscarUsuarioPorEmail,
-  buscarUsuarioPorNome
+  buscarUsuarioPorNome,
+  encontrarTodosUsuariosRepositories
 }

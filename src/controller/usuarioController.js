@@ -11,6 +11,16 @@ const criarUsuarioController = async (request, response) => {
   }
 }
 
+const encontrarTodosUsuariosController = async (request, response) => {
+  try {
+    const usuarios = await usuarioServices.encontrarTodosUsuariosServices()
+    response.status(200).send({usuarios})
+  } catch (err) {
+    response.status(404).send(err.message)
+  }
+}
+
 export default {
-  criarUsuarioController
+  criarUsuarioController,
+  encontrarTodosUsuariosController
 }
