@@ -25,6 +25,4 @@ const usuarioSchema = z.object({
     .optional(),
 })
 
-export default {
-  usuarioSchema,
-}
+export default usuarioSchema
