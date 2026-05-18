@@ -11,5 +11,9 @@ router.post(
   usuarioController.criarUsuarioController
 )
 
+router.get(
+  "/usuarios",
+  usuarioController.listarTodosUsuariosController
+)
 
 export default router
