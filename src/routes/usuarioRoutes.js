@@ -17,8 +17,13 @@ router.get(
 )
 
 router.get(
-  "/usuarios/:id",
+  "/usuarios/id/:id",
   usuarioController.buscarUsuarioPorIdController
+)
+
+router.get(
+  "/usuarios/nome/:nomeUsuario",
+  usuarioController.buscarUsuarioPorNomeController
 )
 
 export default router

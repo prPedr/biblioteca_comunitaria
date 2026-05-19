@@ -11,15 +11,6 @@ const criarUsuarioController = async (request, response) => {
   }
 }
 
-const listarTodosUsuariosController = async (request, response) => {
-  try {
-    const listarUsuarios = await usuarioServices.listarTodosUsuariosServices()
-    response.status(200).send({listarUsuarios})
-  } catch (err) {
-    response.status(404).send(err.message)
-  }
-}
-
 const buscarUsuarioPorIdController = async (request, response) => {
   const {id} = request.params
 
@@ -31,8 +22,29 @@ const buscarUsuarioPorIdController = async (request, response) => {
   }
 }
 
+const buscarUsuarioPorNomeController = async (request, response) => {
+  const {nomeUsuario} = request.params
+
+  try {
+    const buscarPorNome = await usuarioServices.buscarUsuarioPorNomeServices(nomeUsuario)
+    response.status(200).send({buscarPorNome})
+  } catch (err) {
+    response.status(404).send(err.message)
+  }
+}
+
+const listarTodosUsuariosController = async (request, response) => {
+  try {
+    const listarUsuarios = await usuarioServices.listarTodosUsuariosServices()
+    response.status(200).send({listarUsuarios})
+  } catch (err) {
+    response.status(404).send(err.message)
+  }
+}
+
 export default {
   criarUsuarioController,
-  listarTodosUsuariosController,
-  buscarUsuarioPorIdController
+  buscarUsuarioPorIdController,
+  buscarUsuarioPorNomeController,
+  listarTodosUsuariosController
 }

@@ -34,6 +34,15 @@ const buscarUsuarioPorId = async (id) => {
   return buscarId
 }
 
+const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
+  const buscarNome = await usuarioRepositories.buscarUsuarioPorNome(nomeUsuario)
+  if (!buscarNome) {
+    throw new Error("Nao foi posssivel encontrar o nome de usuario")
+  }
+
+  return buscarNome
+}
+
 const listarTodosUsuariosServices = async () => {
   const listarTodosUsuarios = await usuarioRepositories.listarTodosUsuariosRepositories()
   return listarTodosUsuarios
@@ -42,5 +51,6 @@ const listarTodosUsuariosServices = async () => {
 export default {
   criarUsuarioServices,
   buscarUsuarioPorId,
+  buscarUsuarioPorNomeServices,
   listarTodosUsuariosServices
 }
