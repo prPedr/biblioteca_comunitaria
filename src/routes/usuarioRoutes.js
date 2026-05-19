@@ -26,4 +26,9 @@ router.get(
   usuarioController.buscarUsuarioPorNomeController
 )
 
+router.get(
+  "/usuarios/email/:email",
+  usuarioController.buscarUsuarioPorEmailController
+)
+
 export default router

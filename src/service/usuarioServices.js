@@ -43,6 +43,15 @@ const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
   return buscarNome
 }
 
+const buscarUsuarioPorEmailServices = async (email) => {
+  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmail(email)
+  if (!buscarEmail) {
+    throw new Error("Nao possivel encontrar o email de usuario")
+  }
+
+  return buscarEmail
+}
+
 const listarTodosUsuariosServices = async () => {
   const listarTodosUsuarios = await usuarioRepositories.listarTodosUsuariosRepositories()
   return listarTodosUsuarios
@@ -52,5 +61,6 @@ export default {
   criarUsuarioServices,
   buscarUsuarioPorId,
   buscarUsuarioPorNomeServices,
+  buscarUsuarioPorEmailServices,
   listarTodosUsuariosServices
 }
