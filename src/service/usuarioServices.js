@@ -2,12 +2,12 @@ import usuarioRepositories from "../repositories/usuarioRepositories.js"
 import bcrypt from "bcrypt"
 
 const criarUsuarioServices = async (novoUsuario) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmail(novoUsuario.email)
+  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(novoUsuario.email)
   if (buscarEmail) {
     throw new Error("Email já cadastrado.")
   }
 
-  const buscarNome = await usuarioRepositories.buscarUsuarioPorNome(novoUsuario.nomeUsuario)
+  const buscarNome = await usuarioRepositories.buscarUsuarioPorNomeRepositories(novoUsuario.nomeUsuario)
   if (buscarNome) {
     throw new Error("Nome de usuario já cadastrado.")
   }
@@ -25,8 +25,8 @@ const criarUsuarioServices = async (novoUsuario) => {
   return usuario
 }
 
-const buscarUsuarioPorId = async (id) => {
-  const buscarId = await usuarioRepositories.buscarUsuarioPorId(id)
+const buscarUsuarioPorIdServices = async (id) => {
+  const buscarId = await usuarioRepositories.buscarUsuarioPorIdRepositories(id)
   if (!buscarId) {
     throw new Error("Nao foi possivel encontrar o ID de usuario.")
   }
@@ -35,7 +35,7 @@ const buscarUsuarioPorId = async (id) => {
 }
 
 const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
-  const buscarNome = await usuarioRepositories.buscarUsuarioPorNome(nomeUsuario)
+  const buscarNome = await usuarioRepositories.buscarUsuarioPorNomeRepositories(nomeUsuario)
   if (!buscarNome) {
     throw new Error("Nao foi posssivel encontrar o nome de usuario")
   }
@@ -44,7 +44,7 @@ const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
 }
 
 const buscarUsuarioPorEmailServices = async (email) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmail(email)
+  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(email)
   if (!buscarEmail) {
     throw new Error("Nao possivel encontrar o email de usuario")
   }
@@ -59,7 +59,7 @@ const listarTodosUsuariosServices = async () => {
 
 export default {
   criarUsuarioServices,
-  buscarUsuarioPorId,
+  buscarUsuarioPorIdServices,
   buscarUsuarioPorNomeServices,
   buscarUsuarioPorEmailServices,
   listarTodosUsuariosServices

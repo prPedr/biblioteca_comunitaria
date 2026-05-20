@@ -38,7 +38,7 @@ const criarUsuarioRepositories = (novoUsuario) => {
   })
 }
 
-const buscarUsuarioPorId = (id) => {
+const buscarUsuarioPorIdRepositories = (id) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
@@ -60,7 +60,7 @@ const buscarUsuarioPorId = (id) => {
   })
 }
 
-const buscarUsuarioPorEmail = (email) => {
+const buscarUsuarioPorEmailRepositories = (email) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
@@ -82,7 +82,7 @@ const buscarUsuarioPorEmail = (email) => {
   })
 }
 
-const buscarUsuarioPorNome = (nomeUsuario) => {
+const buscarUsuarioPorNomeRepositories = (nomeUsuario) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
@@ -125,8 +125,8 @@ const listarTodosUsuariosRepositories = () => {
 
 export default {
   criarUsuarioRepositories,
-  buscarUsuarioPorId,
-  buscarUsuarioPorEmail,
-  buscarUsuarioPorNome,
+  buscarUsuarioPorIdRepositories,
+  buscarUsuarioPorEmailRepositories,
+  buscarUsuarioPorNomeRepositories,
   listarTodosUsuariosRepositories
 }

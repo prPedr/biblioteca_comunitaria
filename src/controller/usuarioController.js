@@ -15,7 +15,7 @@ const buscarUsuarioPorIdController = async (request, response) => {
   const {id} = request.params
 
   try {
-    const listarUsuarioId = await usuarioServices.buscarUsuarioPorId(id)
+    const listarUsuarioId = await usuarioServices.buscarUsuarioPorIdServices(id)
     response.status(200).send({listarUsuarioId})
   } catch (err) {
     response.status(404).send(err.message)
