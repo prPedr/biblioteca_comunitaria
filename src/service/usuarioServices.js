@@ -37,7 +37,7 @@ const buscarUsuarioPorIdServices = async (id) => {
 const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
   const buscarNome = await usuarioRepositories.buscarUsuarioPorNomeRepositories(nomeUsuario)
   if (!buscarNome) {
-    throw new Error("Nao foi posssivel encontrar o nome de usuario")
+    throw new Error("Nao foi posssivel encontrar o nome de usuario.")
   }
 
   return buscarNome
@@ -46,7 +46,7 @@ const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
 const buscarUsuarioPorEmailServices = async (email) => {
   const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(email)
   if (!buscarEmail) {
-    throw new Error("Nao possivel encontrar o email de usuario")
+    throw new Error("Nao possivel encontrar o email de usuario.")
   }
 
   return buscarEmail
@@ -57,10 +57,42 @@ const listarTodosUsuariosServices = async () => {
   return listarTodosUsuarios
 }
 
+const atualizarUsuarioService = async (id, novoUsuario) => {
+  const buscarId = await usuarioRepositories.buscarUsuarioPorIdRepositories(id)
+  if (!buscarId) {
+    throw new Error("Id do usuario nao encontrado.")
+  }
+
+  if (novoUsuario.email) {
+    const verificarEmailExistente = await usuarioRepositories.buscarUsuarioPorEmailRepositories(novoUsuario.email)
+    
+    if (verificarEmailExistente && verificarEmailExistente.id != id) {
+      throw new Error("Email já cadastrado.")
+    }
+  }
+
+  if (novoUsuario.nomeUsuario) {
+    const verificarNomeExistente = await usuarioRepositories.buscarUsuarioPorNomeRepositories(novoUsuario.nomeUsuario)
+
+    if (verificarNomeExistente && verificarNomeExistente.id != id) {
+      throw new Error("Nome de usuario já cadastrado.")
+    } 
+  }
+
+  if (novoUsuario.senha) {
+    novoUsuario.senha = await bcrypt.hash(novoUsuario.senha, 10)
+  }
+
+  const usuarioAtualizado = await usuarioRepositories.atualizarUsuarioRepositories(id, novoUsuario)
+
+  return usuarioAtualizado
+}
+
 export default {
   criarUsuarioServices,
   buscarUsuarioPorIdServices,
   buscarUsuarioPorNomeServices,
   buscarUsuarioPorEmailServices,
-  listarTodosUsuariosServices
+  listarTodosUsuariosServices,
+  atualizarUsuarioService
 }

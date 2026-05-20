@@ -123,10 +123,41 @@ const listarTodosUsuariosRepositories = () => {
   })
 }
 
+const atualizarUsuarioRepositories = (id, usuario) => {
+  return new Promise((resolve, reject) => {
+    const { nomeUsuario, email, senha, fotoPerfil } = usuario
+
+    db.run(
+      `
+        UPDATE usuarios 
+        SET
+          nomeUsuario = ?,
+          email = ?,
+          senha = ?,
+          fotoPerfil =?
+        WHERE id = ?
+      `,
+
+      [nomeUsuario, email, senha, fotoPerfil, id],
+
+      (err) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve({
+            id, ...usuario
+          })
+        }
+      }
+    )
+  })
+}
+
 export default {
   criarUsuarioRepositories,
   buscarUsuarioPorIdRepositories,
   buscarUsuarioPorEmailRepositories,
   buscarUsuarioPorNomeRepositories,
-  listarTodosUsuariosRepositories
+  listarTodosUsuariosRepositories,
+  atualizarUsuarioRepositories
 }

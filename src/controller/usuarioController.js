@@ -12,7 +12,7 @@ const criarUsuarioController = async (request, response) => {
 }
 
 const buscarUsuarioPorIdController = async (request, response) => {
-  const {id} = request.params
+  const { id } = request.params
 
   try {
     const listarUsuarioId = await usuarioServices.buscarUsuarioPorIdServices(id)
@@ -23,7 +23,7 @@ const buscarUsuarioPorIdController = async (request, response) => {
 }
 
 const buscarUsuarioPorNomeController = async (request, response) => {
-  const {nomeUsuario} = request.params
+  const { nomeUsuario } = request.params
 
   try {
     const buscarPorNome = await usuarioServices.buscarUsuarioPorNomeServices(nomeUsuario)
@@ -34,7 +34,7 @@ const buscarUsuarioPorNomeController = async (request, response) => {
 }
 
 const buscarUsuarioPorEmailController = async (request, response) => {
-  const {email} = request.params
+  const { email } = request.params
 
   try {
     const buscarPorEmail = await usuarioServices.buscarUsuarioPorEmailServices(email)
@@ -53,10 +53,23 @@ const listarTodosUsuariosController = async (request, response) => {
   }
 }
 
+const atualizarUsuarioController = async (request, response) => {
+  const { id } = request.params
+  const novoUsuario = request.body
+
+  try {
+    const usuario = await usuarioServices.atualizarUsuarioService(id, novoUsuario)
+    response.status(200).send({usuario})
+  } catch (err) {
+    response.status(400).send(err.message)
+  }
+}
+
 export default {
   criarUsuarioController,
   buscarUsuarioPorIdController,
   buscarUsuarioPorNomeController,
   buscarUsuarioPorEmailController,
-  listarTodosUsuariosController
+  listarTodosUsuariosController,
+  atualizarUsuarioController
 }
