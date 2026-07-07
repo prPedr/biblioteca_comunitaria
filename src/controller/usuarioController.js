@@ -47,7 +47,7 @@ const buscarUsuarioPorEmailController = async (request, response) => {
 const listarTodosUsuariosController = async (request, response) => {
   try {
     const listarUsuarios = await usuarioServices.listarTodosUsuariosServices()
-    response.status(200).send({listarUsuarios})
+    response.status(200).send(listarUsuarios)
   } catch (err) {
     response.status(404).send(err.message)
   }

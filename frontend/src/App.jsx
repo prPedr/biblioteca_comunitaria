@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Cadastro from './Cadastro';
 import ListaUsuarios from './ListaUsuarios';
-import './App.css'; // Vamos criar esse arquivo rapidinho abaixo
+import './App.css';
 
 function App() {
   const [abaAtual, setAbaAtual] = useState('cadastro');
