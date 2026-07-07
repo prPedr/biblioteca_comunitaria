@@ -1,0 +1,92 @@
+.container-lista {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.cabecalho-lista {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.cabecalho-lista h2 {
+  color: #FFFFFF;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.grid-usuarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-usuario {
+  display: flex;
+  align-items: center;
+  background-color: #1A1A22;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-usuario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  border-left: 4px solid #8A05BE;
+}
+
+.avatar-usuario {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1.25rem;
+  background-color: rgba(138, 5, 190, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar-usuario img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  color: #8A05BE;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.info-usuario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-usuario h3 {
+  color: #EDEDF0;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.info-usuario p {
+  color: #A0A0B2;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.estado-vazio {
+  text-align: center;
+  color: #A0A0B2;
+  padding: 3rem;
+  background-color: #1A1A22;
+  border-radius: 12px;
+  font-size: 1rem;
+}
