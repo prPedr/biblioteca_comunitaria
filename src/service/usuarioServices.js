@@ -1,5 +1,9 @@
+import crypto from "node:crypto"
+import util from "node:util"
+
 import usuarioRepositories from "../repositories/usuarioRepositories.js"
-import bcrypt from "bcrypt"
+
+const scrypt = util.promisify(crypto.scrypt)
 
 const criarUsuarioServices = async (novoUsuario) => {
   const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(novoUsuario.email)
@@ -12,17 +16,20 @@ const criarUsuarioServices = async (novoUsuario) => {
     throw new Error("Nome de usuario já cadastrado.")
   }
 
-  const senhaHash = await bcrypt.hash(novoUsuario.senha, 10)
-  const usuario = await usuarioRepositories.criarUsuarioRepositories({
+  const salto = crypto.randomBytes(16).toString("hex")
+  const buffer = await scrypt(novoUsuario.senha, salto, 64)
+  const senhaHash = `${buffer.toString("hex")}.${salto}`
+
+  const criarUsuario = await usuarioRepositories.criarUsuarioRepositories({
     ...novoUsuario,
     senha : senhaHash,
   })
 
-  if (!usuario) {
-    throw new Error("Erro ao criar usuario.")
+  if (!criarUsuario) {
+    throw new Error("Erro ao criar o usuario.")
   }
 
-  return usuario
+  return criarUsuario
 }
 
 const buscarUsuarioPorIdServices = async (id) => {
