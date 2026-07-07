@@ -42,18 +42,25 @@ const Cadastro = () => {
         return;
       }
 
-      setSucesso("Usuário cadastrado com sucesso!");
+      setSucesso("Usuário cadastrado com sucesso! Bem-vindo(a) à comunidade.");
       setFormData({ nomeUsuario: "", email: "", senha: "", fotoPerfil: "" });
     } catch (error) {
-      setErros([{ mensagem: "Erro ao conectar com o servidor." }]);
+      setErros([{ mensagem: "Erro ao conectar com o servidor. Tente novamente mais tarde." }]);
     }
   };
 
   return (
     <div className="container-soft-dark">
       <div className="card-cadastro">
-        <h2>Criar Conta</h2>
-        <p className="subtitle">Junte-se à nossa biblioteca comunitária</p>
+        {/* Ícone de Boas-Vindas */}
+        <div className="icone-biblioteca">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8257e5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+          </svg>
+        </div>
+
+        <h2>Bem-vindo(a)!</h2>
+        <p className="subtitle">Cadastre-se para explorar nosso acervo comunitário</p>
 
         {sucesso && <div className="alerta sucesso">{sucesso}</div>}
         
@@ -69,19 +76,19 @@ const Cadastro = () => {
 
         <form onSubmit={handleSubmit} className="form-minimalista">
           <div className="input-group">
-            <label htmlFor="nomeUsuario">Nome de Usuário</label>
+            <label htmlFor="nomeUsuario">Como devemos te chamar?</label>
             <input
               type="text"
               id="nomeUsuario"
               name="nomeUsuario"
               value={formData.nomeUsuario}
               onChange={handleChange}
-              placeholder="Digite seu nome"
+              placeholder="Seu nome de usuário"
             />
           </div>
 
           <div className="input-group">
-            <label htmlFor="email">E-mail</label>
+            <label htmlFor="email">E-mail de contato</label>
             <input
               type="email"
               id="email"
@@ -93,14 +100,14 @@ const Cadastro = () => {
           </div>
 
           <div className="input-group">
-            <label htmlFor="senha">Senha</label>
+            <label htmlFor="senha">Crie uma senha segura</label>
             <input
               type="password"
               id="senha"
               name="senha"
               value={formData.senha}
               onChange={handleChange}
-              placeholder="Mínimo 8 caracteres"
+              placeholder="Mínimo de 8 caracteres"
             />
           </div>
 
@@ -112,12 +119,12 @@ const Cadastro = () => {
               name="fotoPerfil"
               value={formData.fotoPerfil}
               onChange={handleChange}
-              placeholder="https://..."
+              placeholder="https://link-da-sua-foto.com"
             />
           </div>
 
           <button type="submit" className="btn-primary">
-            Cadastrar
+            Criar minha conta
           </button>
         </form>
       </div>
