@@ -11,34 +11,34 @@ const criarUsuarioController = async (request, response) => {
   }
 }
 
-const buscarUsuarioPorIdController = async (request, response) => {
+const buscarUsuarioIdController = async (request, response) => {
   const { id } = request.params
 
   try {
-    const listarUsuarioId = await usuarioServices.buscarUsuarioPorIdServices(id)
+    const listarUsuarioId = await usuarioServices.buscarUsuarioIdServices(id)
     response.status(200).send({listarUsuarioId})
   } catch (err) {
     response.status(404).send(err.message)
   }
 }
 
-const buscarUsuarioPorNomeController = async (request, response) => {
+const buscarUsuarioNomeController = async (request, response) => {
   const { nomeUsuario } = request.params
 
   try {
-    const buscarPorNome = await usuarioServices.buscarUsuarioPorNomeServices(nomeUsuario)
-    response.status(200).send({buscarPorNome})
+    const buscarNome = await usuarioServices.buscarUsuarioNomeServices(nomeUsuario)
+    response.status(200).send({buscarNome})
   } catch (err) {
     response.status(404).send(err.message)
   }
 }
 
-const buscarUsuarioPorEmailController = async (request, response) => {
+const buscarUsuarioEmailController = async (request, response) => {
   const { email } = request.params
 
   try {
-    const buscarPorEmail = await usuarioServices.buscarUsuarioPorEmailServices(email)
-    response.status(200).send({buscarPorEmail})
+    const buscarEmail = await usuarioServices.buscarUsuarioEmailServices(email)
+    response.status(200).send({buscarEmail})
   } catch (err) {
     response.status(404).send(err.message)
   }
@@ -53,7 +53,7 @@ const listarTodosUsuariosController = async (request, response) => {
   }
 }
 
-const atualizarUsuarioController = async (request, response) => {
+const atualizarUsuarioIdController = async (request, response) => {
   const { id } = request.params
   const novoUsuario = request.body
 
@@ -67,9 +67,9 @@ const atualizarUsuarioController = async (request, response) => {
 
 export default {
   criarUsuarioController,
-  buscarUsuarioPorIdController,
-  buscarUsuarioPorNomeController,
-  buscarUsuarioPorEmailController,
+  buscarUsuarioIdController,
+  buscarUsuarioNomeController,
+  buscarUsuarioEmailController,
   listarTodosUsuariosController,
-  atualizarUsuarioController
+  atualizarUsuarioIdController
 }

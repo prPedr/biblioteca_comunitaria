@@ -18,23 +18,23 @@ router.get(
 
 router.get(
   "/usuarios/id/:id",
-  usuarioController.buscarUsuarioPorIdController
+  usuarioController.buscarUsuarioIdController
 )
 
 router.get(
   "/usuarios/nome/:nomeUsuario",
-  usuarioController.buscarUsuarioPorNomeController
+  usuarioController.buscarUsuarioNomeController
 )
 
 router.get(
   "/usuarios/email/:email",
-  usuarioController.buscarUsuarioPorEmailController
+  usuarioController.buscarUsuarioEmailController
 )
 
 router.put(
   "/usuarios/:id",
   validacaoMiddlewares(usuarioSchema),
-  usuarioController.atualizarUsuarioController
+  usuarioController.atualizarUsuarioIdController
 )
 
 export default router

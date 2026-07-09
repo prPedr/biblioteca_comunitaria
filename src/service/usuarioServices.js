@@ -6,12 +6,12 @@ import usuarioRepositories from "../repositories/usuarioRepositories.js"
 const scrypt = util.promisify(crypto.scrypt)
 
 const criarUsuarioServices = async (novoUsuario) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(novoUsuario.email)
+  const buscarEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(novoUsuario.email)
   if (buscarEmail) {
     throw new Error("Email já cadastrado.")
   }
 
-  const buscarNome = await usuarioRepositories.buscarUsuarioPorNomeRepositories(novoUsuario.nomeUsuario)
+  const buscarNome = await usuarioRepositories.buscarUsuarioNomeRepositories(novoUsuario.nomeUsuario)
   if (buscarNome) {
     throw new Error("Nome de usuario já cadastrado.")
   }
@@ -32,8 +32,8 @@ const criarUsuarioServices = async (novoUsuario) => {
   return criarUsuario
 }
 
-const buscarUsuarioPorIdServices = async (id) => {
-  const buscarId = await usuarioRepositories.buscarUsuarioPorIdRepositories(id)
+const buscarUsuarioIdServices = async (id) => {
+  const buscarId = await usuarioRepositories.buscarUsuarioIdRepositories(id)
   if (!buscarId) {
     throw new Error("Nao foi possivel encontrar o ID de usuario.")
   }
@@ -41,8 +41,8 @@ const buscarUsuarioPorIdServices = async (id) => {
   return buscarId
 }
 
-const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
-  const buscarNome = await usuarioRepositories.buscarUsuarioPorNomeRepositories(nomeUsuario)
+const buscarUsuarioNomeServices = async (nomeUsuario) => {
+  const buscarNome = await usuarioRepositories.buscarUsuarioNomeRepositories(nomeUsuario)
   if (!buscarNome) {
     throw new Error("Nao foi posssivel encontrar o nome de usuario.")
   }
@@ -50,8 +50,8 @@ const buscarUsuarioPorNomeServices = async (nomeUsuario) => {
   return buscarNome
 }
 
-const buscarUsuarioPorEmailServices = async (email) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioPorEmailRepositories(email)
+const buscarUsuarioEmailServices = async (email) => {
+  const buscarEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(email)
   if (!buscarEmail) {
     throw new Error("Nao possivel encontrar o email de usuario.")
   }
@@ -64,14 +64,14 @@ const listarTodosUsuariosServices = async () => {
   return listarTodosUsuarios
 }
 
-const atualizarUsuarioService = async (id, novoUsuario) => {
-  const buscarId = await usuarioRepositories.buscarUsuarioPorIdRepositories(id)
+const atualizarUsuarioIdService = async (id, novoUsuario) => {
+  const buscarId = await usuarioRepositories.buscarUsuarioIdRepositories(id)
   if (!buscarId) {
     throw new Error("Id do usuario nao encontrado.")
   }
 
   if (novoUsuario.email) {
-    const verificarEmailExistente = await usuarioRepositories.buscarUsuarioPorEmailRepositories(novoUsuario.email)
+    const verificarEmailExistente = await usuarioRepositories.buscarUsuarioEmailRepositories(novoUsuario.email)
     
     if (verificarEmailExistente && verificarEmailExistente.id != id) {
       throw new Error("Email já cadastrado.")
@@ -79,7 +79,7 @@ const atualizarUsuarioService = async (id, novoUsuario) => {
   }
 
   if (novoUsuario.nomeUsuario) {
-    const verificarNomeExistente = await usuarioRepositories.buscarUsuarioPorNomeRepositories(novoUsuario.nomeUsuario)
+    const verificarNomeExistente = await usuarioRepositories.buscarUsuarioNomeRepositories(novoUsuario.nomeUsuario)
 
     if (verificarNomeExistente && verificarNomeExistente.id != id) {
       throw new Error("Nome de usuario já cadastrado.")
@@ -90,16 +90,16 @@ const atualizarUsuarioService = async (id, novoUsuario) => {
     novoUsuario.senha = await bcrypt.hash(novoUsuario.senha, 10)
   }
 
-  const usuarioAtualizado = await usuarioRepositories.atualizarUsuarioRepositories(id, novoUsuario)
+  const usuarioAtualizado = await usuarioRepositories.atualizarUsuarioIdRepositories(id, novoUsuario)
 
   return usuarioAtualizado
 }
 
 export default {
   criarUsuarioServices,
-  buscarUsuarioPorIdServices,
-  buscarUsuarioPorNomeServices,
-  buscarUsuarioPorEmailServices,
+  buscarUsuarioIdServices,
+  buscarUsuarioNomeServices,
+  buscarUsuarioEmailServices,
   listarTodosUsuariosServices,
-  atualizarUsuarioService
+  atualizarUsuarioIdService
 }
