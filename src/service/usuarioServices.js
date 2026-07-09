@@ -6,14 +6,14 @@ import usuarioRepositories from "../repositories/usuarioRepositories.js"
 const scrypt = util.promisify(crypto.scrypt)
 
 const criarUsuarioServices = async (novoUsuario) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(novoUsuario.email)
-  if (buscarEmail) {
-    throw new Error("Email já cadastrado.")
+  const buscarUsuarioNome = await usuarioRepositories.buscarUsuarioNomeRepositories(novoUsuario.nomeUsuario)
+  if (buscarUsuarioNome) {
+    throw new Error("Nome de usuario já cadastrado.")
   }
 
-  const buscarNome = await usuarioRepositories.buscarUsuarioNomeRepositories(novoUsuario.nomeUsuario)
-  if (buscarNome) {
-    throw new Error("Nome de usuario já cadastrado.")
+  const buscarUsuarioEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(novoUsuario.email)
+  if (buscarUsuarioEmail) {
+    throw new Error("E-mail já cadastrado.")
   }
 
   const salto = crypto.randomBytes(16).toString("hex")
@@ -26,37 +26,10 @@ const criarUsuarioServices = async (novoUsuario) => {
   })
 
   if (!criarUsuario) {
-    throw new Error("Erro ao criar o usuario.")
+    throw new Error("Falha ao criar o usuario.")
   }
 
   return criarUsuario
-}
-
-const buscarUsuarioIdServices = async (id) => {
-  const buscarId = await usuarioRepositories.buscarUsuarioIdRepositories(id)
-  if (!buscarId) {
-    throw new Error("Nao foi possivel encontrar o ID de usuario.")
-  }
-
-  return buscarId
-}
-
-const buscarUsuarioNomeServices = async (nomeUsuario) => {
-  const buscarNome = await usuarioRepositories.buscarUsuarioNomeRepositories(nomeUsuario)
-  if (!buscarNome) {
-    throw new Error("Nao foi posssivel encontrar o nome de usuario.")
-  }
-
-  return buscarNome
-}
-
-const buscarUsuarioEmailServices = async (email) => {
-  const buscarEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(email)
-  if (!buscarEmail) {
-    throw new Error("Nao possivel encontrar o email de usuario.")
-  }
-
-  return buscarEmail
 }
 
 const listarTodosUsuariosServices = async () => {
@@ -64,42 +37,58 @@ const listarTodosUsuariosServices = async () => {
   return listarTodosUsuarios
 }
 
-const atualizarUsuarioIdService = async (id, novoUsuario) => {
-  const buscarId = await usuarioRepositories.buscarUsuarioIdRepositories(id)
-  if (!buscarId) {
-    throw new Error("Id do usuario nao encontrado.")
+const listarUsuarioIdServices = async (id) => {
+  const listarUsuarioId = await usuarioRepositories.buscarUsuarioIdRespositories(id)
+
+  if (!listarUsuarioId) {
+    throw new Error("ID de usuario nao encontrado.")
   }
 
-  if (novoUsuario.email) {
-    const verificarEmailExistente = await usuarioRepositories.buscarUsuarioEmailRepositories(novoUsuario.email)
-    
-    if (verificarEmailExistente && verificarEmailExistente.id != id) {
-      throw new Error("Email já cadastrado.")
-    }
+  return listarUsuarioId
+}
+
+const listarUsuarioNomeServices = async (nomeUsuario) => {
+  const listarUsuarioNome = await usuarioRepositories.buscarUsuarioNomeRepositories(nomeUsuario)
+
+  if (!listarUsuarioNome) {
+    throw new Error("Nome de usuario nao encontrado.")
   }
 
-  if (novoUsuario.nomeUsuario) {
-    const verificarNomeExistente = await usuarioRepositories.buscarUsuarioNomeRepositories(novoUsuario.nomeUsuario)
+  return listarUsuarioNome
+}
 
-    if (verificarNomeExistente && verificarNomeExistente.id != id) {
-      throw new Error("Nome de usuario já cadastrado.")
-    } 
+const listarUsuarioEmailServices = async (email) => {
+  const listarUsuarioEmail = await usuarioRepositories.buscarUsuarioEmailRepositories(email)
+
+  if (!listarUsuarioEmail) {
+    throw new Error("Email de usuario nao encontrado.")
+  }
+
+  return listarUsuarioEmail
+}
+
+const atualizarUsuarioIdServices = async (novoUsuario, usuarioId) => {
+  const usuarioExiste = await usuarioRepositories.buscarUsuarioIdRespositories(usuarioId)
+
+  if (!usuarioExiste) {
+    throw new Error("Usuario nao encontrado.")
   }
 
   if (novoUsuario.senha) {
-    novoUsuario.senha = await bcrypt.hash(novoUsuario.senha, 10)
+    const salto = crypto.randomBytes(16).toString("hex")
+    const buffer = await scrypt(novoUsuario.senha, salto, 64)
+    novoUsuario.senha = `${buffer.toString('hex')}.${salto}`
   }
 
-  const usuarioAtualizado = await usuarioRepositories.atualizarUsuarioIdRepositories(id, novoUsuario)
-
-  return usuarioAtualizado
+  const atualizarUsuario = await usuarioRepositories.atualizarUsuarioIdRepositories(usuarioId, novoUsuario)
+  return atualizarUsuario
 }
 
 export default {
   criarUsuarioServices,
-  buscarUsuarioIdServices,
-  buscarUsuarioNomeServices,
-  buscarUsuarioEmailServices,
+  listarUsuarioIdServices,
+  listarUsuarioNomeServices,
+  listarUsuarioEmailServices,
   listarTodosUsuariosServices,
-  atualizarUsuarioIdService
+  atualizarUsuarioIdServices
 }

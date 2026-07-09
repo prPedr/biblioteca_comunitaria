@@ -30,7 +30,7 @@ const criarUsuarioRepositories = (novoUsuario) => {
         } else {
           resolve({
             id : this.lastID,
-            Mensagem : `Usuario ${nomeUsuario} cadastrado`
+            Mensagem : `Usuario ${nomeUsuario} criado.`
           })
         }
       }
@@ -38,14 +38,33 @@ const criarUsuarioRepositories = (novoUsuario) => {
   })
 }
 
-const buscarUsuarioIdRepositories = (id) => {
+const listarTodosUsuariosRepositories = () => {
+  return new Promise((resolve, reject) => {
+    db.all(
+      `
+        SELECT id, nomeUsuario, email, fotoPerfil
+        FROM usuarios
+      `,
+
+      (err, linhaListarTodos) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(linhaListarTodos)
+        }
+      }
+    )
+  })
+}
+
+const buscarUsuarioIdRespositories = (id) => {
   return new Promise((resolve, reject) => {
     db.get(
       `
         SELECT id, nomeUsuario, email, fotoPerfil
         FROM usuarios
         WHERE id = ?
-      `, 
+      `,
 
       [id],
 
@@ -54,28 +73,6 @@ const buscarUsuarioIdRepositories = (id) => {
           reject(err)
         } else {
           resolve(linhaId)
-        }
-      }
-    )
-  })
-}
-
-const buscarUsuarioEmailRepositories = (email) => {
-  return new Promise((resolve, reject) => {
-    db.get(
-      `
-        SELECT id, nomeUsuario, email, fotoPerfil
-        FROM usuarios
-        WHERE email = ?
-      `,
-
-      [email],
-
-      (err, linhaEmail) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(linhaEmail)
         }
       }
     )
@@ -104,48 +101,52 @@ const buscarUsuarioNomeRepositories = (nomeUsuario) => {
   })
 }
 
-const listarTodosUsuariosRepositories = () => {
+const buscarUsuarioEmailRepositories = (email) => {
   return new Promise((resolve, reject) => {
-    db.all(
+    db.get(
       `
         SELECT id, nomeUsuario, email, fotoPerfil
         FROM usuarios
+        WHERE email = ?
       `,
 
-      (err, linhaTodosUsuarios) => {
+      [email],
+
+      (err, linhaEmail) => {
         if (err) {
           reject(err)
         } else {
-          resolve(linhaTodosUsuarios)
+          resolve(linhaEmail)
         }
       }
     )
   })
 }
 
-const atualizarUsuarioIdRepositories = (id, usuario) => {
+const atualizarUsuarioIdRepositories = (idBusca, atualizarUsuario) => {
   return new Promise((resolve, reject) => {
-    const { nomeUsuario, email, senha, fotoPerfil } = usuario
+    const { nomeUsuario, email, senha, fotoPerfil } = atualizarUsuario
 
     db.run(
       `
-        UPDATE usuarios 
-        SET
-          nomeUsuario = ?,
+        UPDATE usuarios
+        SET 
+          nomeUsuario = ?, 
           email = ?,
           senha = ?,
-          fotoPerfil =?
+          fotoPerfil = ?
         WHERE id = ?
       `,
 
-      [nomeUsuario, email, senha, fotoPerfil, id],
+      [nomeUsuario, email, senha, fotoPerfil, idBusca],
 
-      (err) => {
+      function (err) {
         if (err) {
           reject(err)
         } else {
           resolve({
-            id, ...usuario
+            id: idBusca,
+            ...atualizarUsuario
           })
         }
       }
@@ -153,11 +154,12 @@ const atualizarUsuarioIdRepositories = (id, usuario) => {
   })
 }
 
+
 export default {
   criarUsuarioRepositories,
-  buscarUsuarioIdRepositories,
-  buscarUsuarioEmailRepositories,
-  buscarUsuarioNomeRepositories,
   listarTodosUsuariosRepositories,
+  buscarUsuarioIdRespositories,
+  buscarUsuarioNomeRepositories,
+  buscarUsuarioEmailRepositories,
   atualizarUsuarioIdRepositories
 }

@@ -4,50 +4,50 @@ const criarUsuarioController = async (request, response) => {
   const novoUsuario = request.body
 
   try {
-    const usuario = await usuarioServices.criarUsuarioServices(novoUsuario)
-    response.status(201).send({usuario})
+    const criarUsuario = await usuarioServices.criarUsuarioServices(novoUsuario)
+    response.status(201).send({criarUsuario})
   } catch (err) {
     response.status(400).send(err.message)
   }
 }
 
-const buscarUsuarioIdController = async (request, response) => {
+const listarTodosUsuariosController = async (request, response) => {
+  try {
+    const listarTodosUsuarios = await usuarioServices.listarTodosUsuariosServices()
+    response.status(200).send({listarTodosUsuarios})
+  } catch (err) {
+    response.status(404).send(err.message)
+  }
+}
+
+const listarUsuarioIdController = async (request, response) => {
   const { id } = request.params
 
   try {
-    const listarUsuarioId = await usuarioServices.buscarUsuarioIdServices(id)
+    const listarUsuarioId = await usuarioServices.listarUsuarioIdServices(id)
     response.status(200).send({listarUsuarioId})
   } catch (err) {
     response.status(404).send(err.message)
   }
 }
 
-const buscarUsuarioNomeController = async (request, response) => {
+const listarUsuarioNomeController = async (request, response) => {
   const { nomeUsuario } = request.params
 
   try {
-    const buscarNome = await usuarioServices.buscarUsuarioNomeServices(nomeUsuario)
-    response.status(200).send({buscarNome})
+    const listarUsuarioNome = await usuarioServices.listarUsuarioNomeServices(nomeUsuario)
+    response.status(200).send({listarUsuarioNome})
   } catch (err) {
     response.status(404).send(err.message)
   }
 }
 
-const buscarUsuarioEmailController = async (request, response) => {
+const listarUsuarioEmailController = async (request, response) => {
   const { email } = request.params
 
   try {
-    const buscarEmail = await usuarioServices.buscarUsuarioEmailServices(email)
-    response.status(200).send({buscarEmail})
-  } catch (err) {
-    response.status(404).send(err.message)
-  }
-}
-
-const listarTodosUsuariosController = async (request, response) => {
-  try {
-    const listarUsuarios = await usuarioServices.listarTodosUsuariosServices()
-    response.status(200).send(listarUsuarios)
+    const listarUsuarioEmail = await usuarioServices.listarUsuarioEmailServices(email)
+    response.status(200).send({listarUsuarioEmail})
   } catch (err) {
     response.status(404).send(err.message)
   }
@@ -58,8 +58,8 @@ const atualizarUsuarioIdController = async (request, response) => {
   const novoUsuario = request.body
 
   try {
-    const usuario = await usuarioServices.atualizarUsuarioService(id, novoUsuario)
-    response.status(200).send({usuario})
+    const atualizarUsuario = await usuarioServices.atualizarUsuarioIdServices(novoUsuario, id)
+    response.status(200).send({atualizarUsuario})
   } catch (err) {
     response.status(400).send(err.message)
   }
@@ -67,9 +67,9 @@ const atualizarUsuarioIdController = async (request, response) => {
 
 export default {
   criarUsuarioController,
-  buscarUsuarioIdController,
-  buscarUsuarioNomeController,
-  buscarUsuarioEmailController,
   listarTodosUsuariosController,
+  listarUsuarioIdController,
+  listarUsuarioNomeController,
+  listarUsuarioEmailController,
   atualizarUsuarioIdController
 }
