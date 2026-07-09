@@ -37,4 +37,10 @@ router.put(
   usuarioController.atualizarUsuarioIdController 
 )
 
+router.put(
+  "/usuarios/nomeUsuario/:nomeUsuario",
+  validacaoMiddlewares(usuarioSchema),
+  usuarioController.atualizarUsuarioNomeController
+)
+
 export default router

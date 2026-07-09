@@ -84,11 +84,29 @@ const atualizarUsuarioIdServices = async (novoUsuario, usuarioId) => {
   return atualizarUsuario
 }
 
+const atualizarUsuarioNomeServices = async (novoUsuario, usuarioNome) => {
+  const usuarioExiste = await usuarioRepositories.buscarUsuarioNomeRepositories(usuarioNome)
+
+  if (!usuarioExiste) {
+    throw new Error("Usuario nao encontrado.")
+  }
+
+  if (novoUsuario.senha) {
+    const salto = crypto.randomBytes(16).toString("hex")
+    const buffer = await scrypt(novoUsuario.senha, salto, 64)
+    novoUsuario.senha = `${buffer.toString('hex')}.${salto}`
+  }
+
+  const atualizarUsuario = await usuarioRepositories.atualizarUsuarioNomeRepositories(usuarioNome, novoUsuario)
+  return atualizarUsuario
+}
+
 export default {
   criarUsuarioServices,
   listarUsuarioIdServices,
   listarUsuarioNomeServices,
   listarUsuarioEmailServices,
   listarTodosUsuariosServices,
-  atualizarUsuarioIdServices
+  atualizarUsuarioIdServices,
+  atualizarUsuarioNomeServices
 }
