@@ -43,4 +43,10 @@ router.put(
   usuarioController.atualizarUsuarioNomeController
 )
 
+router.put(
+  "/usuarios/email/:email",
+  validacaoMiddlewares(usuarioSchema),
+  usuarioController.atualizarUsuarioEmailController
+)
+
 export default router

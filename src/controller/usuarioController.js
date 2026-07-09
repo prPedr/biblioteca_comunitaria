@@ -77,6 +77,18 @@ const atualizarUsuarioNomeController = async (request, response) => {
   }
 }
 
+const atualizarUsuarioEmailController = async (request, response) => {
+  const { email } = request.params
+  const novoUsuario = request.body
+
+  try {
+    const atualizarUsuario = await usuarioServices.atualizarUsuarioEmailServices(novoUsuario, email)
+    response.status(200).send({atualizarUsuario})
+  } catch (err) {
+    response.status(400).send(err.message)
+  }
+}
+
 export default {
   criarUsuarioController,
   listarTodosUsuariosController,
@@ -84,5 +96,6 @@ export default {
   listarUsuarioNomeController,
   listarUsuarioEmailController,
   atualizarUsuarioIdController,
-  atualizarUsuarioNomeController
+  atualizarUsuarioNomeController,
+  atualizarUsuarioEmailController
 }

@@ -185,6 +185,37 @@ const atualizarUsuarioNomeRepositories = (nomeUsuarioBusca, atualizarUsuario) =>
   })
 }
 
+const atualizarUsuarioEmailController = (emailBusca, atualizarUsuario) => {
+  return new Promise((resolve, reject) => {
+    const { nomeUsuario, email, senha, fotoPerfil } = atualizarUsuario
+
+    db.run(
+      `
+        UPDATE usuarios
+        SET
+          nomeUsuario = ?,
+          email = ?,
+          senha = ?,
+          fotoPerfil = ?
+        WHERE email = ?
+      `,
+
+      [nomeUsuario, email, senha, fotoPerfil, emailBusca],
+
+      function(err) {
+        if (err) {
+          reject(err)
+        } else {
+          resolve({
+            email: emailBusca,
+            ...atualizarUsuario
+          })
+        }
+      }
+    )
+  })
+}
+
 export default {
   criarUsuarioRepositories,
   listarTodosUsuariosRepositories,
@@ -192,5 +223,6 @@ export default {
   buscarUsuarioNomeRepositories,
   buscarUsuarioEmailRepositories,
   atualizarUsuarioIdRepositories,
-  atualizarUsuarioNomeRepositories
+  atualizarUsuarioNomeRepositories,
+  atualizarUsuarioEmailController
 }
